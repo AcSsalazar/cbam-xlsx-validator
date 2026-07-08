@@ -43,3 +43,13 @@ Thumbs.db
 build/
 dist/
 *.egg-info/
+
+# Databases (nunca commiteadas)
+*.db
+*.sqlite
+backend/*.db
+
+
+
+
+
