@@ -82,8 +82,8 @@ pip install -r backend/requirements-dev.txt
 
 ```bash
 cd frontend
-npm install
-cd ..
+pnpm install
+
 ```
 
 ## Run Backend
@@ -103,6 +103,12 @@ uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 
 ```bash
 ./scripts/run_frontend.sh
+```
+or manually
+
+```bash
+cd frontend
+pnpm install
 ```
 
 ## Run Migrations
