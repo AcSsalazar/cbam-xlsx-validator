@@ -1,1 +1,6 @@
-"""Upload endpoint tests will be implemented in future iterations."""
+import pytest
+
+
+@pytest.mark.skip(reason="Pending upload implementation")
+def test_upload_endpoint_placeholder() -> None:
+    pass
