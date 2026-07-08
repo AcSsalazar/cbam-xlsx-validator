@@ -69,7 +69,7 @@ This iteration delivers only a clean, extensible foundation (no business logic y
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/Scripts/activate
 ```
 
 ### 2) Install backend dependencies
