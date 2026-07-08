@@ -7,7 +7,7 @@ interface SpinnerProps {
 
 export function Spinner({ size = 16, label }: SpinnerProps) {
   const style = { width: size, height: size };
-  const accessibleLabel = label ?? "Loading";
+  const accessibleLabel = label ?? "Cargando";
   return (
     <span
       className={styles.wrapper}

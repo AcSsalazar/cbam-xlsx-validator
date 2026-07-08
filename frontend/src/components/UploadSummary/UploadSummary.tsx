@@ -17,12 +17,12 @@ export function UploadSummary({
     <div className={styles.summary}>
       <div className={styles.header}>
         <p className={styles.filename}>{filename}</p>
-        <p className={styles.subtitle}>Upload completed</p>
+        <p className={styles.subtitle}>Carga completada</p>
       </div>
       <div className={styles.stats}>
         <Stat label="Total" value={totalRows} tone="neutral" />
-        <Stat label="Valid" value={validRows} tone="success" />
-        <Stat label="Invalid" value={invalidRows} tone="error" />
+        <Stat label="Validas" value={validRows} tone="success" />
+        <Stat label="Invalidas" value={invalidRows} tone="error" />
       </div>
     </div>
   );

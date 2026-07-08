@@ -56,7 +56,7 @@ export function JsonModal({ open, title, data, onClose }: JsonModalProps) {
             type="button"
             className={styles.closeButton}
             onClick={onClose}
-            aria-label="Close"
+            aria-label="Cerrar"
           >
             ×
           </button>
@@ -64,7 +64,7 @@ export function JsonModal({ open, title, data, onClose }: JsonModalProps) {
         <pre className={styles.code}>{formatted}</pre>
         <footer className={styles.footer}>
           <Button variant="secondary" onClick={onClose}>
-            Close
+            Cerrar
           </Button>
         </footer>
       </div>

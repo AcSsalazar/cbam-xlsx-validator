@@ -55,7 +55,7 @@ export function RecordsPage() {
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to load records";
       void Swal.fire({
-        title: "Server error",
+        title: "Error del servidor",
         text: message,
         icon: "error",
         confirmButtonColor: "#2563eb",
@@ -90,13 +90,13 @@ export function RecordsPage() {
   const columns: Column<PreviewItem>[] = [
     {
       key: "row_number",
-      header: "Row",
+      header: "Fila",
       width: "64px",
       render: (row) => <span className={styles.numericCell}>{row.row_number}</span>,
     },
     {
       key: "preview",
-      header: "Preview",
+      header: "Vista previa",
       render: (row) => (
         <div className={styles.preview}>
           {Object.entries(row.preview).map(([key, value]) => (
@@ -110,7 +110,7 @@ export function RecordsPage() {
     },
     {
       key: "created_at",
-      header: "Created",
+      header: "Creado",
       width: "180px",
       render: (row) => (
         <span className={styles.mutedCell}>{formatDate(row.created_at)}</span>
@@ -127,7 +127,7 @@ export function RecordsPage() {
           variant="secondary"
           onClick={() => handleOpenJson(row)}
         >
-          View JSON
+          Ver JSON
         </Button>
       ),
     },
@@ -136,21 +136,21 @@ export function RecordsPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1>Records</h1>
+        <h1>Registros</h1>
         <p className={styles.subtitle}>
-          Valid rows persisted from previous uploads.
+          Filas validas persistidas de cargas anteriores.
         </p>
       </header>
 
       <Card>
         {loading && !data ? (
           <div className={styles.loading}>
-            <Spinner size={20} label="Loading records" />
+            <Spinner size={20} label="Cargando registros" />
           </div>
         ) : data && data.items.length === 0 ? (
           <EmptyState
-            title="No records yet"
-            description="Upload a workbook to see its valid rows here."
+            title="Aun no hay registros"
+            description="Suba un archivo para ver sus filas validas aqui."
           />
         ) : (
           <>

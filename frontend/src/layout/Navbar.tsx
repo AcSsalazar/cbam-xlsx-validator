@@ -3,9 +3,9 @@ import { useHealth } from "../hooks/useHealth";
 import styles from "./Navbar.module.css";
 
 const HEALTH_LABEL: Record<string, string> = {
-  online: "Online",
-  offline: "Offline",
-  checking: "Checking…",
+  online: "En linea",
+  offline: "Fuera de linea",
+  checking: "Verificando…",
 };
 
 function healthLabel(state: boolean | null): string {
@@ -20,10 +20,12 @@ export function Navbar() {
     <header className={styles.navbar}>
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <div className={styles.logo} aria-hidden="true">C</div>
+          <div className={styles.logo} aria-hidden="true">
+            <img src="/favicon.svg" alt="" className={styles.logoImg} />
+          </div>
           <div className={styles.titleBlock}>
-            <span className={styles.title}>CBAM Validator</span>
-            <span className={styles.subtitle}>Shared Data Intake</span>
+            <span className={styles.title}>Validador CBAM</span>
+            <span className={styles.subtitle}>Recepcion de datos compartidos</span>
           </div>
         </div>
 
@@ -35,7 +37,7 @@ export function Navbar() {
               `${styles.link} ${isActive ? styles.linkActive : ""}`
             }
           >
-            Upload
+            Subir
           </NavLink>
           <NavLink
             to="/records"
@@ -43,7 +45,7 @@ export function Navbar() {
               `${styles.link} ${isActive ? styles.linkActive : ""}`
             }
           >
-            Records
+            Registros
           </NavLink>
         </nav>
 
@@ -59,7 +61,7 @@ export function Navbar() {
             aria-hidden="true"
           />
           <span className={styles.healthLabel}>
-            Backend · {healthLabel(healthy)}
+            Backend — {healthLabel(healthy)}
           </span>
         </div>
       </div>

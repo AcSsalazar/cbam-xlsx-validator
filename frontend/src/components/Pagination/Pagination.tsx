@@ -42,11 +42,11 @@ export function Pagination({
   const items = buildPages(page, totalPages);
 
   return (
-    <nav className={styles.pagination} aria-label="Pagination">
+    <nav className={styles.pagination} aria-label="Paginacion">
       <p className={styles.summary}>
         {total === 0
-          ? "0 results"
-          : `${start}-${end} of ${total}`}
+          ? "0 resultados"
+          : `${start}-${end} de ${total}`}
       </p>
       <div className={styles.controls}>
         <button
@@ -54,7 +54,7 @@ export function Pagination({
           className={styles.button}
           onClick={() => onPageChange(page - 1)}
           disabled={page <= 1}
-          aria-label="Previous page"
+          aria-label="Pagina anterior"
         >
           ‹
         </button>
@@ -84,7 +84,7 @@ export function Pagination({
           className={styles.button}
           onClick={() => onPageChange(page + 1)}
           disabled={page >= totalPages}
-          aria-label="Next page"
+          aria-label="Pagina siguiente"
         >
           ›
         </button>

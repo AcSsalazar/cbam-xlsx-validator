@@ -22,24 +22,24 @@ export function ErrorTable({ errors }: ErrorTableProps) {
   const columns: Column<ErrorRow>[] = [
     {
       key: "row",
-      header: "Row",
+      header: "Fila",
       width: "80px",
       render: (row) => <span className={styles.rowCell}>{row.row}</span>,
     },
     {
       key: "field",
-      header: "Field",
+      header: "Campo",
       width: "220px",
       render: (row) => <span className={styles.fieldCell}>{row.field}</span>,
     },
     {
       key: "value",
-      header: "Value",
+      header: "Valor",
       render: (row) => <span className={styles.valueCell}>{row.renderedValue}</span>,
     },
     {
       key: "message",
-      header: "Message",
+      header: "Mensaje",
       render: (row) => <span className={styles.messageCell}>{row.message}</span>,
     },
   ];

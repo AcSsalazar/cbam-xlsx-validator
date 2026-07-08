@@ -21,7 +21,7 @@ export function Home() {
     setFile(next);
     setFileError(null);
     if (next && !next.name.toLowerCase().endsWith(".xlsx")) {
-      setFileError("Only .xlsx files are accepted");
+      setFileError("Solo se aceptan archivos .xlsx");
     }
   };
 
@@ -32,15 +32,15 @@ export function Home() {
       const result = await uploadFile(file);
       setReport(result);
       void Swal.fire({
-        title: "Upload complete",
-        text: `${result.valid_rows} of ${result.total_rows} rows imported.`,
+        title: "Carga completa",
+        text: `${result.valid_rows} de ${result.total_rows} filas importadas.`,
         icon: "success",
         confirmButtonColor: "#2563eb",
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Upload failed";
       void Swal.fire({
-        title: "Upload failed",
+        title: "Error al subir",
         text: message,
         icon: "error",
         confirmButtonColor: "#2563eb",
@@ -62,17 +62,17 @@ export function Home() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1>Upload</h1>
+        <h1>Subir</h1>
         <p className={styles.subtitle}>
-          Import a CBAM-formatted Excel workbook and review the validation
-          results below.
+          Importe un libro de Excel con formato CBAM y revise los resultados
+          de validacion a continuacion.
         </p>
       </header>
 
       <div className={styles.stack}>
         <Card
-          title="File"
-          description="Select a .xlsx workbook to import."
+          title="Archivo"
+          description="Seleccione un archivo .xlsx para importar."
           action={
             <Button
               onClick={handleUpload}
@@ -80,7 +80,7 @@ export function Home() {
               size="sm"
             >
               {uploading ? <Spinner size={14} /> : null}
-              {uploading ? "Uploading…" : "Upload"}
+              {uploading ? "Subiendo…" : "Subir"}
             </Button>
           }
         >
@@ -93,7 +93,7 @@ export function Home() {
             />
             {report && (
               <Button variant="ghost" size="sm" onClick={handleReset}>
-                Clear
+                Limpiar
               </Button>
             )}
           </div>
@@ -101,8 +101,8 @@ export function Home() {
 
         {report && (
           <Card
-            title="Summary"
-            description="Counts include only the rows present in the uploaded file."
+            title="Resumen"
+            description="Los conteos incluyen solo las filas presentes en el archivo subido."
           >
             <UploadSummary
               filename={report.filename}
@@ -115,10 +115,10 @@ export function Home() {
 
         {showErrors && (
           <Card
-            title="Validation errors"
+            title="Errores de validacion"
             description={`${report.errors.length} error${
-              report.errors.length === 1 ? "" : "s"
-            } across ${countInvalidRows(report.errors)} row${
+              report.errors.length === 1 ? "" : "es"
+            } en ${countInvalidRows(report.errors)} fila${
               countInvalidRows(report.errors) === 1 ? "" : "s"
             }.`}
           >
@@ -127,10 +127,10 @@ export function Home() {
         )}
 
         {report && !showErrors && (
-          <Card title="Validation errors">
+          <Card title="Errores de validacion">
             <EmptyState
-              title="No validation errors"
-              description="Every row in the file passed all rules."
+              title="Sin errores de validacion"
+              description="Todas las filas del archivo pasaron todas las reglas."
             />
           </Card>
         )}

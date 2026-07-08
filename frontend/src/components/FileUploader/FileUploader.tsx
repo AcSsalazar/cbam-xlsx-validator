@@ -10,7 +10,7 @@ interface FileUploaderProps {
   error?: string | null;
 }
 
-const MAX_BYTES = 20 * 1024 * 1024; // 20 MB
+const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
 
 export function FileUploader({
   file,
@@ -62,7 +62,7 @@ export function FileUploader({
                 Selecciona un archivo .xlsx
               </p>
               <p className={styles.placeholderHint}>
-                Tamaño maximo: 20 MB
+                Tamaño maximo: 10 MB
               </p>
           </div>
         )}
@@ -81,7 +81,7 @@ export function FileUploader({
               }}
               disabled={disabled}
             >
-              Remove
+              Eliminar
             </button>
           </div>
         )}
