@@ -49,6 +49,17 @@ uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 Abrir http://127.0.0.1:8000/docs en el navegador para acceder a la
 documentacion interactiva (Swagger UI) de la API.
 
+### Probar endpoints desde Swagger
+
+Desde http://127.0.0.1:8000/docs se pueden ejecutar los endpoints directamente:
+
+- **POST /upload** — hacer clic en "Try it out", seleccionar un archivo .xlsx
+  en el campo `file`, ejecutar y ver la respuesta JSON con el reporte de
+  validacion.
+- **GET /records** — ejecutar con parametros `page` y `page_size` para listar
+  las filas validas persistidas.
+- **GET /health** — verificar que el servidor esta operativo.
+
 ---
 
 ## Endpoints
