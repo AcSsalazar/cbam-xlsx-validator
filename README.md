@@ -68,41 +68,125 @@ documentacion interactiva (Swagger UI) de la API.
 
 ---
 
-## Probar la API con curl
+## Pruebas manuales (solo backend)
+
+Instructivo paso a paso para probar la API manualmente con curl.
+
+### Requisitos previos
+
+- Servidor detenido (puerto 8000 libre)
+- Entorno virtual activo
+
+### 1. Preparar base de datos limpia
 
 ```bash
-# Verificar salud del servidor
+cd backend
+rm -f cbam.db
+alembic upgrade head
+```
+
+Salida esperada: `Running upgrade  -> <hash>, initial schema`
+
+### 2. Iniciar el servidor
+
+```bash
+cd backend
+uvicorn app.main:app --reload
+```
+
+Salida esperada: `Uvicorn running on http://127.0.0.1:8000`
+
+Mantener esta terminal abierta. Abrir una terminal nueva para los comandos
+siguientes (todo desde la carpeta `backend/`).
+
+### 3. Health check
+
+```bash
 curl http://127.0.0.1:8000/health
+```
 
-# Subir un archivo de prueba (incluido en el repositorio)
+Esperado: HTTP 200 — `{"status":"ok"}`
+
+### 4. Subir archivo valido
+
+```bash
 curl -X POST http://127.0.0.1:8000/upload \
-  -F "file=@backend/tests/data/cbam_template.xlsx" | python -m json.tool
+  -F "file=@tests/data/valid_sample.xlsx"
+```
 
-# Listar filas validas persistidas
-curl "http://127.0.0.1:8000/records?page=1&page_size=10" | python -m json.tool
+Esperado: HTTP 200 — `total_rows: 3, valid_rows: 3, invalid_rows: 0`
 
-# Probar validacion de paginacion (debe devolver 422)
+### 5. Subir archivo invalido
+
+```bash
+curl -X POST http://127.0.0.1:8000/upload \
+  -F "file=@tests/data/invalid_sample.xlsx"
+```
+
+Esperado: HTTP 200 — `total_rows: 3, valid_rows: 0, invalid_rows: 3`
+con 3 errores (filas 2, 3 y 4).
+
+### 6. Listar registros persistidos
+
+```bash
+curl "http://127.0.0.1:8000/records?page=1&page_size=10"
+```
+
+Esperado: HTTP 200 — `page: 1, total: 3`, con los 3 registros validos.
+
+### 7. Paginacion con parametros invalidos
+
+```bash
 curl "http://127.0.0.1:8000/records?page=0"
 ```
 
-### Respuesta esperada de `/upload`
+Esperado: HTTP 422 con detalle `page must be >= 1`.
 
-```json
-{
-  "filename": "cbam_template.xlsx",
-  "total_rows": 5,
-  "valid_rows": 1,
-  "invalid_rows": 4,
-  "errors": [
-    {
-      "row": 2,
-      "field": "EORI Number",
-      "value": "",
-      "message": "is required"
-    }
-  ]
-}
+```bash
+curl "http://127.0.0.1:8000/records?page=1&page_size=0"
 ```
+
+Esperado: HTTP 422 con detalle `page_size must be >= 1`.
+
+### 8. Rechazo por extension incorrecta
+
+```bash
+echo "no es xlsx" > /tmp/archivo.txt
+curl -X POST http://127.0.0.1:8000/upload -F "file=@/tmp/archivo.txt"
+```
+
+Esperado: HTTP 400 — `Only .xlsx files are accepted`
+
+### 9. Rechazo por archivo mayor a 10 MB
+
+```bash
+python -c "open('/tmp/grande.bin','wb').write(b'x' * (11 * 1024 * 1024))"
+curl -X POST http://127.0.0.1:8000/upload \
+  -F "file=@/tmp/grande.bin;filename=grande.xlsx"
+```
+
+Esperado: HTTP 400 — `File too large. Maximum size is 10 MB, got 11.00 MB`
+
+### 10. Rechazo por archivo sin filas de datos
+
+```bash
+curl -X POST http://127.0.0.1:8000/upload \
+  -F "file=@tests/data/cbam_template.xlsx"
+```
+
+Esperado: HTTP 400 — `The uploaded file contains no data rows`
+
+### Resumen de codigos HTTP esperados
+
+| Caso | Codigo | Mensaje clave |
+|---|---|---|
+| Health | 200 | `{"status":"ok"}` |
+| Upload valido | 200 | `valid_rows: 3` |
+| Upload invalido | 200 | `invalid_rows: 3`, 3 errores |
+| Pagina invalida | 422 | validacion Pydantic |
+| Extension incorrecta | 400 | `Only .xlsx files are accepted` |
+| Archivo > 10 MB | 400 | `File too large...` |
+| Archivo sin filas | 400 | `no data rows` |
 
 ---
 
